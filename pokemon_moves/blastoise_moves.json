@@ -1,0 +1,122 @@
+[
+    {
+        "nombre": "Hidrobomba",
+        "tipo": "Agua",
+        "categoría": "Especial",
+        "poder": 110
+    },
+    {
+        "nombre": "Pistola Agua",
+        "tipo": "Agua",
+        "categoría": "Especial",
+        "poder": 40
+    },
+    {
+        "nombre": "Rayo Hielo",
+        "tipo": "Hielo",
+        "categoría": "Especial",
+        "poder": 90
+    },
+    {
+        "nombre": "Golpe Cabeza",
+        "tipo": "Normal",
+        "categoría": "Físico",
+        "poder": 70
+    },
+    {
+        "nombre": "Terremoto",
+        "tipo": "Tierra",
+        "categoría": "Físico",
+        "poder": 100
+    },
+    {
+        "nombre": "Demolición",
+        "tipo": "Lucha",
+        "categoría": "Físico",
+        "poder": 75
+    },
+    {
+        "nombre": "Giro Rápido",
+        "tipo": "Normal",
+        "categoría": "Físico",
+        "poder": 20
+    },
+    {
+        "nombre": "Hidropulso",
+        "tipo": "Agua",
+        "categoría": "Especial",
+        "poder": 60
+    },
+    {
+        "nombre": "Burbuja",
+        "tipo": "Agua",
+        "categoría": "Especial",
+        "poder": 40
+    },
+    {
+        "nombre": "Golpe Roca",
+        "tipo": "Lucha",
+        "categoría": "Físico",
+        "poder": 40
+    },
+    {
+        "nombre": "Antiaéreo",
+        "tipo": "Roca",
+        "categoría": "Especial",
+        "poder": 50
+    },
+    {
+        "nombre": "Foco Resplandor",
+        "tipo": "Acero",
+        "categoría": "Especial",
+        "poder": 80
+    },
+    {
+        "nombre": "Cola Férrea",
+        "tipo": "Acero",
+        "categoría": "Físico",
+        "poder": 100
+    },
+    {
+        "nombre": "Dbole Rayo",
+        "tipo": "Bicho",
+        "categoría": "Especial",
+        "poder": 75
+    },
+    {
+        "nombre": "Golpe Aéreo",
+        "tipo": "Volador",
+        "categoría": "Físico",
+        "poder": 85
+    },
+    {
+        "nombre": "Mordisco",
+        "tipo": "Siniestro",
+        "categoría": "Físico",
+        "poder": 60
+    },
+    {
+        "nombre": "Fuerza",
+        "tipo": "Normal",
+        "categoría": "Físico",
+        "poder": 80
+    },
+    {
+        "nombre": "Agua Lodosa",
+        "tipo": "Agua",
+        "categoría": "Especial",
+        "poder": 80
+    },
+    {
+        "nombre": "Cascada",
+        "tipo": "Agua",
+        "categoría": "Físico",
+        "poder": 80
+    },
+    {
+        "nombre": "Puño Hielo",
+        "tipo": "Hielo",
+        "categoría": "Físico",
+        "poder": 75
+    }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "nombre": "Tormenta Floral",
+    "tipo": "Planta",
+    "categoría": "Físico",
+    "poder": 90
+  },
+  {
+    "nombre": "Latigazo",
+    "tipo": "Planta",
+    "categoría": "Físico",
+    "poder": 120
+  },
+  {
+    "nombre": "Látigo Cepa",
+    "tipo": "Planta",
+    "categoría": "Físico",
+    "poder": 45
+  },
+  {
+    "nombre": "Terremoto",
+    "tipo": "Tierra",
+    "categoría": "Físico",
+    "poder": 100
+  },
+  {
+    "nombre": "Bomba Lodo",
+    "tipo": "Veneno",
+    "categoría": "Especial",
+    "poder": 90
+  },
+  {
+    "nombre": "Residuos",
+    "tipo": "Veneno",
+    "categoría": "Especial",
+    "poder": 65
+  },
+  {
+    "nombre": "Golpe Cabeza",
+    "tipo": "Normal",
+    "categoría": "Físico",
+    "poder": 70
+  },
+  {
+    "nombre": "Golpe Roca",
+    "tipo": "Lucha",
+    "categoría": "Físico",
+    "poder": 40
+  },
+  {
+    "nombre": "Gigadrenada",
+    "tipo": "Planta",
+    "categoría": "Especial",
+    "poder": 75
+  },
+  {
+    "nombre": "Corte",
+    "tipo": "Normal",
+    "categoría": "Físico",
+    "poder": 50
+  },
+  {
+    "nombre": "Hoja Mágica",
+    "tipo": "Planta",
+    "categoría": "Especial",
+    "poder": 60
+  },
+  {
+    "nombre": "Carga Tóxica",
+    "tipo": "Veneno",
+    "categoría": "Especial",
+    "poder": 65
+  },
+  {
+    "nombre": "Treparrocas",
+    "tipo": "Normal",
+    "categoría": "Físico",
+    "poder": 90
+  },
+  {
+    "nombre": "Terratemblor",
+    "tipo": "Tierra",
+    "categoría": "Físico",
+    "poder": 60
+  },
+  {
+    "nombre": "Enfado",
+    "tipo": "Dragón",
+    "categoría": "Físico",
+    "poder": 120
+  },
+  {
+    "nombre": "Bomba Germen",
+    "tipo": "Planta",
+    "categoría": "Especial",
+    "poder": 80
+  },
+  {
+    "nombre": "Hoja Afilada",
+    "tipo": "Planta",
+    "categoría": "Físico",
+    "poder": 55
+  },
+  {
+    "nombre": "Energibola",
+    "tipo": "Planta",
+    "categoría": "Especial",
+    "poder": 90
+  },
+  {
+    "nombre": "Voto Planta",
+    "tipo": "Planta",
+    "categoría": "Especial",
+    "poder": 80
+  },
+  {
+    "nombre": "Corte Furia",
+    "tipo": "Bicho",
+    "categoría": "Físico",
+    "poder": 40
+  }
+]
