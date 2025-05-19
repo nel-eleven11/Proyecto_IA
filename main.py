@@ -3,7 +3,6 @@ from pokemon_data import get_pokemon_stats
 from type_table import TypeTable
 
 def seleccionar_pokemon():
-    """Permite al usuario seleccionar 2 Pokémon para la batalla"""
     print("\nPokémon disponibles:")
     print("1. Charizard (Fuego/Volador)")
     print("2. Blastoise (Agua)")
@@ -134,5 +133,5 @@ print("\nTodo listo para el combate :o")
 
 # en este punto los pokemon que van a combatir estna en el dict "pokemons_finales"
 # y los movimientos estarian en pokemons_finales["Charizard"]["Movimientos"] por ejemplo
-# aca se puede ver la estructura del dict
+# aca se puede ver la estructura del dict :)
 print(pokemons_finales)
