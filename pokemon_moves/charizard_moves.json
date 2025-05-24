@@ -1,122 +1,22 @@
 [
-    {
-        "nombre": "Lanzallamas",
-        "tipo": "Fuego",
-        "categoría": "Especial",
-        "poder": 90
-    },
-    {
-        "nombre": "Pirotecnia",
-        "tipo": "Fuego",
-        "categoría": "Físico",
-        "poder": 70
-    },
-    {
-        "nombre": "Tajo Aéreo",
-        "tipo": "Volador",
-        "categoría": "Especial",
-        "poder": 75
-    },
-    {
-        "nombre": "Ataque Ala",
-        "tipo": "Volador",
-        "categoría": "Físico",
-        "poder": 60
-    },
-    {
-        "nombre": "Terremoto",
-        "tipo": "Tierra",
-        "categoría": "Físico",
-        "poder": 100
-    },
-    {
-        "nombre": "Pulso Dragón",
-        "tipo": "Dragón",
-        "categoría": "Especial",
-        "poder": 85
-    },
-    {
-        "nombre": "Garra Dragón",
-        "tipo": "Dragón",
-        "categoría": "Físico",
-        "poder": 80
-    },
-    {
-        "nombre": "Ataque Rápido",
-        "tipo": "Normal",
-        "categoría": "Físico",
-        "poder": 40
-    },
-    {
-        "nombre": "Golpe Cabeza",
-        "tipo": "Normal",
-        "categoría": "Físico",
-        "poder": 70
-    },
-    {
-        "nombre": "Cuchillada",
-        "tipo": "Normal",
-        "categoría": "Físico",
-        "poder": 70
-    },
-    {
-        "nombre": "Puño Trueno",
-        "tipo": "Eléctrico",
-        "categoría": "Físico",
-        "poder": 75
-    },
-    {
-        "nombre": "Golpe Roca",
-        "tipo": "Lucha",
-        "categoría": "Físico",
-        "poder": 40
-    },
-    {
-        "nombre": "Triturar",
-        "tipo": "Siniestro",
-        "categoría": "Físico",
-        "poder": 80
-    },
-    {
-        "nombre": "Puño Fuego",
-        "tipo": "Fuego",
-        "categoría": "Físico",
-        "poder": 75
-    },
-    {
-        "nombre": "Onda Ígnea",
-        "tipo": "Fuego",
-        "categoría": "Especial",
-        "poder": 95
-    },
-    {
-        "nombre": "Llamarada",
-        "tipo": "Fuego",
-        "categoría": "Especial",
-        "poder": 110
-    },
-    {
-        "nombre": "Ala de Acero",
-        "tipo": "Acero",
-        "categoría": "Físico",
-        "poder": 70
-    },
-    {
-        "nombre": "Colmillo Ígneo",
-        "tipo": "Fuego",
-        "categoría": "Físico",
-        "poder": 65
-    },
-    {
-        "nombre": "Nitrocarga",
-        "tipo": "Fuego",
-        "categoría": "Físico",
-        "poder": 50
-    },
-    {
-        "nombre": "Poder Pasado",
-        "tipo": "Roca",
-        "categoría": "Especial",
-        "poder": 60
-    }
+    {"nombre": "Lanzallamas",    "tipo": "Fuego",   "categoría": "Especial", "poder": 90,  "precision": 1.00},
+    {"nombre": "Pirotecnia",     "tipo": "Fuego",   "categoría": "Físico",   "poder": 70,  "precision": 1.00},
+    {"nombre": "Tajo Aéreo",     "tipo": "Volador", "categoría": "Especial", "poder": 75,  "precision": 0.95},
+    {"nombre": "Ataque Ala",     "tipo": "Volador", "categoría": "Físico",   "poder": 60,  "precision": 1.00},
+    {"nombre": "Terremoto",      "tipo": "Tierra",  "categoría": "Físico",   "poder": 100, "precision": 1.00},
+    {"nombre": "Pulso Dragón",   "tipo": "Dragón",  "categoría": "Especial", "poder": 85,  "precision": 1.00},
+    {"nombre": "Garra Dragón",   "tipo": "Dragón",  "categoría": "Físico",   "poder": 80,  "precision": 1.00},
+    {"nombre": "Ataque Rápido",  "tipo": "Normal",  "categoría": "Físico",   "poder": 40,  "precision": 1.00},
+    {"nombre": "Golpe Cabeza",   "tipo": "Normal",  "categoría": "Físico",   "poder": 70,  "precision": 1.00},
+    {"nombre": "Cuchillada",     "tipo": "Normal",  "categoría": "Físico",   "poder": 70,  "precision": 1.00},
+    {"nombre": "Puño Trueno",    "tipo": "Eléctrico","categoría": "Físico",  "poder": 75,  "precision": 1.00},
+    {"nombre": "Golpe Roca",     "tipo": "Lucha",   "categoría": "Físico",   "poder": 40,  "precision": 1.00},
+    {"nombre": "Triturar",       "tipo": "Siniestro","categoría": "Físico",  "poder": 80,  "precision": 1.00},
+    {"nombre": "Puño Fuego",     "tipo": "Fuego",   "categoría": "Físico",   "poder": 75,  "precision": 1.00},
+    {"nombre": "Onda Ígnea",     "tipo": "Fuego",   "categoría": "Especial", "poder": 95,  "precision": 1.00},
+    {"nombre": "Llamarada",      "tipo": "Fuego",   "categoría": "Especial", "poder": 110, "precision": 0.85},
+    {"nombre": "Ala de Acero",   "tipo": "Acero",   "categoría": "Físico",   "poder": 70,  "precision": 0.90},
+    {"nombre": "Colmillo Ígneo", "tipo": "Fuego",   "categoría": "Físico",   "poder": 65,  "precision": 0.95},
+    {"nombre": "Nitrocarga",     "tipo": "Fuego",   "categoría": "Físico",   "poder": 50,  "precision": 1.00},
+    {"nombre": "Poder Pasado",   "tipo": "Roca",    "categoría": "Especial", "poder": 60,  "precision": 1.00}
 ]
