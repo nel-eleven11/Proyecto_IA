@@ -54,7 +54,9 @@ def get_best_type_potential(moveset, defender_types, type_table: TypeTable):
         eff = 1.0
         for dt in defender_types:
             eff *= type_table.calculate_effectivity(move['tipo'], [dt])
-        power = eff * move['poder']
+        #power = eff * move['poder']
+        precision = move.get('precision', 1.0)
+        power = eff * move['poder'] * precision
         if power > best:
             best = power
     return best
