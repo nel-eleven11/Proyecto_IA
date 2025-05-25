@@ -6,6 +6,7 @@ from move_set_managament import load_pokemon_moves, get_random_moveset, show_mov
 from pokemon_data import get_pokemon_stats
 from type_table import TypeTable
 from agent import GameState, PokemonInfo, GameContext, pick_best_move, apply_damage
+from environment import EnvironmentTable
 
 # --- Funciones de selección y asignación ---
 def seleccionar_pokemon():
@@ -102,16 +103,28 @@ def main():
             types=types,
             moveset=moveset
         )
+        infos[nombre].base_stats = infos[nombre].stats.copy()
     # Contexto y estado inicial
     p1, p2 = infos[seleccionados[0]], infos[seleccionados[1]]
     context = GameContext(p1, p2)
     state = GameState(p1.max_hp, p2.max_hp)
     depth = 2
 
-        # Simulación de batalla
+    env_table = EnvironmentTable()
+    # Simulación de batalla
     turn = 1
     while not state.is_terminal():
         print(f"Turno {turn}: {p1.name} HP={state.hp1}, {p2.name} HP={state.hp2}")
+
+        if turn > 1:
+            #Cambia el ambiente de la batalla
+            for info in infos.values():
+                info.stats = info.base_stats.copy()
+
+            env = env_table.get_random_environment()
+            print(f"-> Nuevo ambiente: {env}. ¡Esto afecta a los pokemon!")
+            for info in infos.values():
+                env_table.apply_environment(env, info)
 
         # Decisión de movimientos
         idx1 = pick_best_move(state, context, tabla_tipos, depth)
