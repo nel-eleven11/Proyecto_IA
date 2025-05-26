@@ -31,3 +31,8 @@ Video
 ```
 
 ---
+Documento 
+
+```
+https://uvggt-my.sharepoint.com/:w:/r/personal/chu221007_uvg_edu_gt/Documents/PROYECTO%20FINAL%20IA.docx?d=wa0d75d9fafe14a808a92c91c8d0cff59&csf=1&web=1&e=OjpXR6
+```
