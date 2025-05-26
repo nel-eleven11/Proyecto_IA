@@ -8,12 +8,33 @@ from type_table import TypeTable
 from agent import GameState, PokemonInfo, GameContext, pick_best_move, apply_damage, pick_best_move_ab
 from environment import EnvironmentTable
 
+from colorama import Fore, Style, init
+
+# Inicializar colorama
+init()
+
+# Definir colores para cada Pokémon
+POKEMON_COLORS = {
+    "Charizard": Fore.RED,
+    "Blastoise": Fore.BLUE,
+    "Venusaur": Fore.GREEN
+}
+
+def get_pokemon_color(name):
+
+    base_name = name.split(' (P')[0]  # Elimina el (P1/P2) si existe
+    return POKEMON_COLORS.get(base_name, Fore.WHITE)
+
+def print_pokemon(name, text):
+    color = get_pokemon_color(name)
+    print(f"{color}{text}{Style.RESET_ALL}")
+
 # --- Funciones de selección y asignación ---
 def seleccionar_pokemon():
     print("\nPokémon disponibles:")
-    print("1. Charizard (Fuego/Volador)")
-    print("2. Blastoise (Agua)")
-    print("3. Venusaur (Planta/Veneno)")
+    print(f"1. {Fore.RED}Charizard (Fuego/Volador){Style.RESET_ALL}")
+    print(f"2. {Fore.BLUE}Blastoise (Agua){Style.RESET_ALL}")
+    print(f"3. {Fore.GREEN}Venusaur (Planta/Veneno){Style.RESET_ALL}")
     
     seleccionados = []
     nombres_base = []
@@ -30,13 +51,12 @@ def seleccionar_pokemon():
             
             seleccionados.append(nombre_mostrar)
             nombres_base.append(nombre_base)
-            print(f"¡{nombre_mostrar} seleccionado!")
+            print_pokemon(nombre_base, f"¡{nombre_mostrar} seleccionado!")
                 
         except ValueError:
             print("Por favor ingresa un número válido")
     
     return seleccionados, nombres_base
-
 
 def asignar_movimientos(pokemon_nombre, movimientos_disponibles, es_segundo_identico=False, moveset_primero=None):
     if es_segundo_identico:
@@ -191,7 +211,10 @@ def main():
     # Simulación de batalla
     turn = 1
     while not state.is_terminal():
-        print(f"\nTurno {turn}: {p1.name} HP={state.hp1}, {p2.name} HP={state.hp2}")
+        hp_text = f"\nTurno {turn}: "
+        hp_text += f"{get_pokemon_color(p1.name)}{p1.name}{Style.RESET_ALL} HP={state.hp1}, "
+        hp_text += f"{get_pokemon_color(p2.name)}{p2.name}{Style.RESET_ALL} HP={state.hp2}"
+        print(hp_text)
 
         if turn > 1:
             #Cambia el ambiente de la batalla
@@ -213,7 +236,8 @@ def main():
         swapped_ctx = GameContext(p2, p1)
         idx2 = pick_best_move(swapped_state, swapped_ctx, tabla_tipos, depth)
         move2 = p2.moveset[idx2]
-        print(f"{p1.name} usa {move1['nombre']}, {p2.name} usa {move2['nombre']}")
+        print(f"{get_pokemon_color(p1.name)}{p1.name}{Style.RESET_ALL} usa {move1['nombre']}, "
+          f"{get_pokemon_color(p2.name)}{p2.name}{Style.RESET_ALL} usa {move2['nombre']}")
 
         # Orden de ataque
         first = p1.stats['velocidad'] >= p2.stats['velocidad']
@@ -221,36 +245,47 @@ def main():
             # Primer ataque p1
             if random.random() <= move1['precision']:
                 state = apply_damage(state, context, p1, p2, move1, tabla_tipos, True)
-                print(f"  Impacta {move1['nombre']}! {p2.name} HP ahora {state.hp2}")
+                print(f"  {get_pokemon_color(p1.name)}» {p1.name}{Style.RESET_ALL} usa {move1['nombre']}! "
+                    f"{get_pokemon_color(p2.name)}{p2.name}{Style.RESET_ALL} HP ahora {Fore.YELLOW}{state.hp2}{Style.RESET_ALL}")
             else:
-                print(f"  Falla {move1['nombre']}!")
+                print(f"  {get_pokemon_color(p1.name)}» {p1.name}{Style.RESET_ALL} usa {move1['nombre']}... "
+                    f"{Fore.RED}¡Falla!{Style.RESET_ALL}")
+            
             # Segundo ataque p2
             if state.hp2 > 0:
                 if random.random() <= move2['precision']:
                     state = apply_damage(state, context, p2, p1, move2, tabla_tipos, True)
-                    print(f"  Impacta {move2['nombre']}! {p1.name} HP ahora {state.hp1}")
+                    print(f"  {get_pokemon_color(p2.name)}» {p2.name}{Style.RESET_ALL} usa {move2['nombre']}! "
+                        f"{get_pokemon_color(p1.name)}{p1.name}{Style.RESET_ALL} HP ahora {Fore.YELLOW}{state.hp1}{Style.RESET_ALL}")
                 else:
-                    print(f"  Falla {move2['nombre']}!")
+                    print(f"  {get_pokemon_color(p2.name)}» {p2.name}{Style.RESET_ALL} usa {move2['nombre']}... "
+                        f"{Fore.RED}¡Falla!{Style.RESET_ALL}")
         else:
             # Primer ataque p2
             if random.random() <= move2['precision']:
                 state = apply_damage(state, context, p2, p1, move2, tabla_tipos, True)
-                print(f"  Impacta {move2['nombre']}! {p1.name} HP ahora {state.hp1}")
+                print(f"  {get_pokemon_color(p2.name)}» {p2.name}{Style.RESET_ALL} usa {move2['nombre']}! "
+                    f"{get_pokemon_color(p1.name)}{p1.name}{Style.RESET_ALL} HP ahora {Fore.YELLOW}{state.hp1}{Style.RESET_ALL}")
             else:
-                print(f"  Falla {move2['nombre']}!")
+                print(f"  {get_pokemon_color(p2.name)}» {p2.name}{Style.RESET_ALL} usa {move2['nombre']}... "
+                    f"{Fore.RED}¡Falla!{Style.RESET_ALL}")
+            
             # Segundo ataque p1
             if state.hp1 > 0:
                 if random.random() <= move1['precision']:
                     state = apply_damage(state, context, p1, p2, move1, tabla_tipos, True)
-                    print(f"  Impacta {move1['nombre']}! {p2.name} HP ahora {state.hp2}")
+                    print(f"  {get_pokemon_color(p1.name)}» {p1.name}{Style.RESET_ALL} usa {move1['nombre']}! "
+                        f"{get_pokemon_color(p2.name)}{p2.name}{Style.RESET_ALL} HP ahora {Fore.YELLOW}{state.hp2}{Style.RESET_ALL}")
                 else:
-                    print(f"  Falla {move1['nombre']}!")
+                    print(f"  {get_pokemon_color(p1.name)}» {p1.name}{Style.RESET_ALL} usa {move1['nombre']}... "
+                        f"{Fore.RED}¡Falla!{Style.RESET_ALL}")
 
         turn += 1
 
     # Resultado final
-    winner = p1.name if state.hp2 <= 0 else p2.name
-    print(f"¡Victoria de {winner}!")
+    # Resultado final
+    winner = p1 if state.hp2 <= 0 else p2
+    print_pokemon(winner.name, f"¡Victoria de {winner.name}!")
 
 if __name__ == '__main__':
     main()
