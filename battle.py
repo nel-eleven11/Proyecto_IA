@@ -5,7 +5,7 @@ import random
 from move_set_managament import load_pokemon_moves, get_random_moveset, show_moves_list
 from pokemon_data import get_pokemon_stats
 from type_table import TypeTable
-from agent import GameState, PokemonInfo, GameContext, pick_best_move, apply_damage
+from agent import GameState, PokemonInfo, GameContext, pick_best_move, apply_damage, pick_best_move_ab
 from environment import EnvironmentTable
 
 # --- Funciones de selección y asignación ---
@@ -104,6 +104,16 @@ def main():
             moveset=moveset
         )
         infos[nombre].base_stats = infos[nombre].stats.copy()
+
+    #Se pide qué estrategia usar
+    print("¿Qué tipo de IA deseas usar para P1?")
+    print("1. Expectimax normal")
+    print("2. Expectimax con poda α–β")
+
+    modo = None
+    while modo not in ('1','2'):
+        modo = input("Selecciona 1 o 2: ").strip()
+
     # Contexto y estado inicial
     p1, p2 = infos[seleccionados[0]], infos[seleccionados[1]]
     context = GameContext(p1, p2)
@@ -127,7 +137,10 @@ def main():
                 env_table.apply_environment(env, info)
 
         # Decisión de movimientos
-        idx1 = pick_best_move(state, context, tabla_tipos, depth)
+        if modo == '1':
+            idx1 = pick_best_move(state, context, tabla_tipos, depth)
+        else:
+            idx1 = pick_best_move_ab(state, context, tabla_tipos, depth)
         move1 = p1.moveset[idx1]
         swapped_state = GameState(state.hp2, state.hp1)
         swapped_ctx = GameContext(p2, p1)

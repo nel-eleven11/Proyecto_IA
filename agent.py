@@ -164,6 +164,83 @@ def expectimax(state: GameState, context: GameContext, type_table: TypeTable,
         v_miss  = expectimax(st_miss, context, type_table, depth-1, 'agent')
         return p * v_hit + (1-p) * v_miss
 
+
+#  Minimax con poda
+
+def expectimax_ab(state, context, type_table, depth, stage, alpha, beta, m1_idx=None, m2_idx=None) -> float:
+    """
+    Igual que expectimax(), pero con poda α–β en los nodos de agente (max) y oponente (min).
+    stage: 'agent', 'opponent', 'chance1', 'chance2'
+    alpha, beta: valores de poda
+    """
+    # Terminal o profundidad cero
+    if state.is_terminal() or depth == 0:
+        return evaluate_state(state, context, type_table)
+    
+    # AGENT (maximiza)
+    if stage == 'agent':
+        value = float('-inf')
+        for i, mv in enumerate(context.p1.moveset):
+            v = expectimax_ab(state, context, type_table, depth, 'opponent', alpha, beta, i, None)
+            value = max(value, v)
+            alpha = max(alpha, value)
+            if alpha >= beta:
+                break  # poda β
+        return value
+
+    # OPPONENT (minimiza)
+    if stage == 'opponent':
+        value = float('inf')
+        for j, mv in enumerate(context.p2.moveset):
+            v = expectimax_ab(state, context, type_table, depth, 'chance1', alpha, beta, m1_idx, j)
+            value = min(value, v)
+            beta = min(beta, value)
+            if beta <= alpha:
+                break  # poda α
+        return value
+
+    # CHANCE 1 y CHANCE 2 idénticos a expectimax():
+    if stage == 'chance1':
+        first = context.p1.stats['velocidad'] >= context.p2.stats['velocidad']
+        mv = (context.p1 if first else context.p2).moveset[m1_idx if first else m2_idx]
+        p = mv.get('precision', 1.0)
+        st_hit  = apply_damage(state.clone(), context,
+                               context.p1 if first else context.p2,
+                               context.p2 if first else context.p1,
+                               mv, type_table, True)
+        st_miss = state.clone()
+        v_hit  = expectimax_ab(st_hit, context, type_table, depth, 'chance2', alpha, beta, m1_idx, m2_idx)
+        v_miss = expectimax_ab(st_miss, context, type_table, depth, 'chance2', alpha, beta, m1_idx, m2_idx)
+        return p * v_hit + (1-p) * v_miss
+
+    if stage == 'chance2':
+        first = context.p1.stats['velocidad'] >= context.p2.stats['velocidad']
+        # si alguien ya muere, paso a siguiente profundidad
+        if state.hp1 <= 0 or state.hp2 <= 0:
+            return expectimax_ab(state, context, type_table, depth-1, 'agent', alpha, beta)
+        mv = (context.p2 if first else context.p1).moveset[m2_idx if first else m1_idx]
+        p = mv.get('precision', 1.0)
+        st_hit  = apply_damage(state.clone(), context,
+                               context.p2 if first else context.p1,
+                               context.p1 if first else context.p2,
+                               mv, type_table, True)
+        st_miss = state.clone()
+        v_hit  = expectimax_ab(st_hit, context, type_table, depth-1, 'agent', alpha, beta)
+        v_miss = expectimax_ab(st_miss, context, type_table, depth-1, 'agent', alpha, beta)
+        return p * v_hit + (1-p) * v_miss
+
+# ----- Decisión del agente con prunning-----
+def pick_best_move_ab(state, context, type_table, depth):
+    best, best_i = float('-inf'), 0
+    alpha, beta = float('-inf'), float('inf')
+    for i, mv in enumerate(context.p1.moveset):
+        val = expectimax_ab(state, context, type_table, depth, 'opponent', alpha, beta, i, None)
+        if val > best:
+            best, best_i = val, i
+        alpha = max(alpha, best)
+    return best_i
+
+
 # ----- Decisión del agente -----
 def pick_best_move(state: GameState, context: GameContext, type_table: TypeTable, depth: int) -> int:
     best, best_i = float('-inf'), 0
