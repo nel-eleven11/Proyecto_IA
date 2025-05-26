@@ -3,7 +3,7 @@ def get_pokemon_stats(nombre_pokemon):
         "nombre": "Charizard",
         "tipo": ["Fuego", "Volador"],
         "stats": {
-            "hp": 566,
+            "hp": 866,
             "ataque": 155,
             "defensa": 144,
             "ataque_especial": 200,
@@ -16,7 +16,7 @@ def get_pokemon_stats(nombre_pokemon):
         "nombre": "Blastoise",
         "tipo": ["Agua"],
         "stats": {
-            "hp": 568,
+            "hp": 868,
             "ataque": 153,
             "defensa": 184,
             "ataque_especial": 157,
@@ -29,7 +29,7 @@ def get_pokemon_stats(nombre_pokemon):
         "nombre": "Venusaur",
         "tipo": ["Planta", "Veneno"],
         "stats": {
-            "hp": 570,
+            "hp": 870,
             "ataque": 152,
             "defensa": 153,
             "ataque_especial": 184,

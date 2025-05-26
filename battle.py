@@ -9,6 +9,8 @@ from agent import GameState, PokemonInfo, GameContext, pick_best_move, apply_dam
 from environment import EnvironmentTable
 
 from colorama import Fore, Style, init
+import matplotlib.pyplot as plt
+
 
 # Inicializar colorama
 init()
@@ -287,5 +289,125 @@ def main():
     winner = p1 if state.hp2 <= 0 else p2
     print_pokemon(winner.name, f"¡Victoria de {winner.name}!")
 
+def simulate_battles(
+    pokemon1: str,
+    pokemon2: str,
+    strategy1: str,
+    strategy2: str,
+    iterations: int,
+    depth: int = 2
+) -> dict:
+    """
+    Ejecuta 'iterations' batallas entre pokemon1 y pokemon2 usando estrategias definidas:
+    - strategyX: 'minimax' o 'alpha-beta'
+    Retorna un dict con la cantidad de victorias de cada Pokémon
+    Además, muestra un gráfico de pastel con los porcentajes de victorias.
+    """
+    # Carga de pools y stats
+    pool1 = load_pokemon_moves(pokemon1.lower())
+    pool2 = load_pokemon_moves(pokemon2.lower())
+    data1 = get_pokemon_stats(pokemon1)
+    data2 = get_pokemon_stats(pokemon2)
+    stats1, types1 = data1['stats'], data1['tipo']
+    stats2, types2 = data2['stats'], data2['tipo']
+    type_table = TypeTable()
+
+    wins = {pokemon1: 0, pokemon2: 0}
+
+    for _ in range(iterations):
+        # Movementsets aleatorios
+        ms1 = get_random_moveset(pool1)
+        ms2 = get_random_moveset(pool2)
+        for mv in ms1: mv.setdefault('precision', 1.0)
+        for mv in ms2: mv.setdefault('precision', 1.0)
+
+        # Crear objetos Pokémon
+        p1 = PokemonInfo(
+            name=pokemon1,
+            max_hp=stats1['hp'],
+            stats={k: stats1[k] for k in stats1 if k != 'hp'},
+            types=types1,
+            moveset=ms1
+        )
+        p2 = PokemonInfo(
+            name=pokemon2,
+            max_hp=stats2['hp'],
+            stats={k: stats2[k] for k in stats2 if k != 'hp'},
+            types=types2,
+            moveset=ms2
+        )
+        p1.base_stats, p2.base_stats = p1.stats.copy(), p2.stats.copy()
+
+        context = GameContext(p1, p2)
+        state = GameState(p1.max_hp, p2.max_hp)
+
+        # Batalla hasta terminal
+        while not state.is_terminal():
+            # Selección de movimientos
+            if strategy1 == 'minimax':
+                idx1 = pick_best_move(state, context, type_table, depth)
+            else:
+                idx1 = pick_best_move_ab(state, context, type_table, depth)
+            move1 = p1.moveset[idx1]
+
+            swapped_state = GameState(state.hp2, state.hp1)
+            swapped_ctx = GameContext(p2, p1)
+            if strategy2 == 'minimax':
+                idx2 = pick_best_move(swapped_state, swapped_ctx, type_table, depth)
+            else:
+                idx2 = pick_best_move_ab(swapped_state, swapped_ctx, type_table, depth)
+            move2 = p2.moveset[idx2]
+
+            # Orden de ataque
+            first = p1.stats['velocidad'] >= p2.stats['velocidad']
+            if first:
+                if random.random() <= move1['precision']:
+                    state = apply_damage(state, context, p1, p2, move1, type_table, True)
+                if state.hp2 > 0 and random.random() <= move2['precision']:
+                    state = apply_damage(state, context, p2, p1, move2, type_table, True)
+            else:
+                if random.random() <= move2['precision']:
+                    state = apply_damage(state, context, p2, p1, move2, type_table, True)
+                if state.hp1 > 0 and random.random() <= move1['precision']:
+                    state = apply_damage(state, context, p1, p2, move1, type_table, True)
+
+        # Registrar ganador
+        winner = pokemon1 if state.hp2 <= 0 else pokemon2
+        wins[winner] += 1
+
+    # Gráfico de pastel
+    labels = [pokemon1, pokemon2]
+    sizes = [wins[pokemon1], wins[pokemon2]]
+    plt.figure(figsize=(6, 6))
+    plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
+    plt.title(f'Porcentaje de victorias en {iterations} batallas')
+    plt.show()
+
+    return wins
+
+
 if __name__ == '__main__':
-    main()
+    while True:
+        print("\n=== Menú Principal ===")
+        print("1. Ejecutar batalla manual (main)")
+        print("2. Simular múltiples batallas")
+        print("3. Salir")
+        opcion = input("Selecciona una opción (1-3): ").strip()
+
+        if opcion == '1':
+            main()
+        elif opcion == '2':
+            p1 = input("Nombre del Pokémon 1 (Charizard, Blastoise, Venusaur): ").strip()
+            p2 = input("Nombre del Pokémon 2 (Charizard, Blastoise, Venusaur): ").strip()
+            strat1 = input("Estrategia para Pokémon 1 (minimax o alpha-beta): ").strip()
+            strat2 = input("Estrategia para Pokémon 2 (minimax o alpha-beta): ").strip()
+            n = int(input("Número de iteraciones: "))
+            resultado = simulate_battles(p1, p2, strat1, strat2, n)
+            print("\nResultados finales:", resultado)
+        elif opcion == '3':
+            print("Saliendo...")
+            break
+        else:
+            print("Opción no válida. Intenta de nuevo.")
+
+
